@@ -119,17 +119,26 @@ class UsersController extends Controller
             $data['is_admin'] = $user->is_admin;
         }
         $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id),],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name' => ['string', 'max:255'],
+            'email' => ['string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'username' => ['string', 'max:255', Rule::unique('users')->ignore($user->id),],
+            'password' => ['string', 'min:8', 'confirmed'],
             'is_admin' => ['boolean'],
+            'avatar' => ['image','max:10240'],
         ]);
 
         if ($validator->fails()) {
             return redirect()->route('users.edit', $user->id)
                 ->withErrors($validator)
                 ->withInput();
+        }
+
+        if($request->hasFile('avatar'))
+        {
+            $file = $request->file('avatar');
+            $avatarName = $user->id.'.'.time().'.'.$file->extension();
+            $file->move(public_path('uploads'), $avatarName);
+            $user->avatar = $avatarName;
         }
 
         $user->name = $data['name'];

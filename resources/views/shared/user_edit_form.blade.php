@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('users.update', $user->id) }}">
+<form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -82,6 +82,20 @@
 
         <div class="col-md-6">
             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="avatar" class="col-md-4 col-form-label text-md-right">{{__('fields.users.avatar')}}</label>
+
+        <div class="col-md-6">
+            <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar" accept="image/*">
+
+            @error('avatar')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
     </div>
 
