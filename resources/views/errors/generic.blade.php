@@ -1,0 +1,1 @@
+{{ __('Something went wrong') }}
