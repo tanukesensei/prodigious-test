@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div>
-                        <a href="{{ route('admin_registration') }}" class="form-control">
+                        <a href="{{ route('users.create') }}" class="form-control">
                             {{__('buttons.add.coworker')}}
                         </a>
                         </div>

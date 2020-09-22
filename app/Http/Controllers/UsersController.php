@@ -35,7 +35,7 @@ class UsersController extends Controller
             return abort(403);
         }
 
-        return view('admin_registration');
+        return view('users.create');
     }
 
     /**
@@ -63,7 +63,7 @@ class UsersController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect()->route('admin_registration')
+                return redirect()->route('users.create')
                 ->withErrors($validator)
                 ->withInput();
             }

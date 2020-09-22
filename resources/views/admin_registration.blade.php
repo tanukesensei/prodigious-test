@@ -8,7 +8,7 @@
                 <div class="card-header"><h4>{{__('headers.register.coworkers')}}</h4></div>
                 <div class="card-body">
 
-                    @include('shared.user_register_form', ['route_name' => 'user_store'])
+                    @include('shared.user_register_form', ['route_name' => 'users.store'])
 
                 </div>
             </div>
