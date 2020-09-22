@@ -32,7 +32,7 @@ class UsersController extends Controller
     public function create()
     {
         if (Gate::denies('store-user')) {
-            return response()->view('errors.generic', [], 403);
+            return abort(403);
         }
 
         return view('admin_registration');
@@ -47,7 +47,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         if (Gate::denies('store-user')) {
-            return response()->view('errors.generic', [], 403);
+            return abort(403);
         }
 
         $data = $request->all();
@@ -105,7 +105,7 @@ class UsersController extends Controller
         $user = User::find($id);
 
         if (Gate::denies('update-user', $user)) {
-            return response()->view('errors.generic', [], 403);
+            return abort(403);
         }
 
         return view('users.edit', ['user' => $user]);
@@ -123,7 +123,7 @@ class UsersController extends Controller
         $user = User::find($id);
 
         if (Gate::denies('update-user', $user)) {
-            return response()->view('errors.generic', [], 403);
+            return abort(403);
         }
 
         $data = $request->all();
@@ -179,8 +179,8 @@ class UsersController extends Controller
     {
         $user = User::find($id);
 
-        if (!Gate::denies('destroy-user', $user)) {
-            return abort(403, 'Unauthorized action.');
+        if (Gate::denies('destroy-user', $user)) {
+            return abort(403);
         }
 
         $user->delete();
