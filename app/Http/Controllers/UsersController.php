@@ -58,15 +58,27 @@ class UsersController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'is_admin' => ['boolean'],
-        ]);
+            'avatar' => ['image','max:102400'],
+            'description' =>['string', 'max:300'],
+            ]);
 
-        if ($validator->fails()) {
-            return redirect()->route('admin_registration')
+            if ($validator->fails()) {
+                return redirect()->route('admin_registration')
                 ->withErrors($validator)
                 ->withInput();
+            }
+
+        $user = User::createFromData($data);
+
+        if($request->hasFile('avatar'))
+        {
+            $file = $request->file('avatar');
+            $avatarName = $user->id.'.'.time().'.'.$file->extension();
+            $file->move(public_path('uploads'), $avatarName);
+            $user->avatar = $avatarName;
+            $user->save();
         }
 
-        User::createFromData($data);
         return redirect()->route('home');
     }
 
@@ -78,7 +90,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return view('users.show', ['user' => $user]);
     }
 
     /**
@@ -118,13 +131,15 @@ class UsersController extends Controller
         if(!Auth::user()->is_admin) {
             $data['is_admin'] = $user->is_admin;
         }
+
         $validator = Validator::make($data, [
             'name' => ['string', 'max:255'],
             'email' => ['string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'username' => ['string', 'max:255', Rule::unique('users')->ignore($user->id),],
-            'password' => ['string', 'min:8', 'confirmed'],
+            'username' => ['string', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'password' => ['sometimes', 'string', 'min:8', 'confirmed'],
             'is_admin' => ['boolean'],
             'avatar' => ['image','max:10240'],
+            'description' =>['string', 'max:300'],
         ]);
 
         if ($validator->fails()) {
@@ -144,9 +159,14 @@ class UsersController extends Controller
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->username = $data['username'];
-        $user->password = $data['password'];
+
+        if(!empty(trim($data['password']))) {
+            $user->password = $data['password'];
+        }
+        $user->is_admin = $data['is_admin'];
+        $user->description = $data['description'];
         $user->save();
-        return redirect()->route('home');
+        return redirect()->route('users.show', $id);
     }
 
     /**
@@ -159,8 +179,8 @@ class UsersController extends Controller
     {
         $user = User::find($id);
 
-        if (Gate::denies('destroy-user', $user)) {
-            return response()->view('errors.generic', [], 403);
+        if (!Gate::denies('destroy-user', $user)) {
+            return abort(403, 'Unauthorized action.');
         }
 
         $user->delete();

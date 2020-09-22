@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('Welcome!') }}
+                    {{ __('home.welcome.myTest') }}
                 </div>
             </div>
 
@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <div>
                         <a href="{{ route('admin_registration') }}" class="form-control">
-                            Adicionar Colaborador
+                            {{__('buttons.add.coworker')}}
                         </a>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <div>
                       <a href="{{route('users.index')}}" class="form-control">
-                        Listar Usuários
+                        {{__('buttons.list.users')}}
                       </a>
                     </div>
                 </div>

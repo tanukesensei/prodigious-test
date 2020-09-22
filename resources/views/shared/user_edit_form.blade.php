@@ -17,7 +17,7 @@
     </div>
 
     <div class="form-group row">
-        <label for="email" class="col-md-4 col-form-label text-md-right">Endereço de E-mail</label>
+        <label for="email" class="col-md-4 col-form-label text-md-right">{{__('fields.users.e-mail adress')}}</label>
 
         <div class="col-md-6">
             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') ?? $user->email  }}" required autocomplete="email">
@@ -31,7 +31,7 @@
     </div>
 
     <div class="form-group row">
-        <label for="username" class="col-md-4 col-form-label text-md-right">Usuário</label>
+        <label for="username" class="col-md-4 col-form-label text-md-right">{{__('username')}}</label>
 
         <div class="col-md-6">
             <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') ?? $user->username }}" required autocomplete="username">
@@ -44,13 +44,26 @@
         </div>
     </div>
 
-     @auth
+    <div class="form-group row">
+        <label for="description" class="col-md-4 col-form-label text-md-right">{{__('fields.users.description')}}</label>
+
+         <div class="col-md-6">
+            <textarea id="description" type="description" class="form-control @error('description') is-invalid @enderror" name="description" autocomplete="description">{{ old('description') ?? $user->description }}</textarea>
+            @error('description')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+    </div>
+
+    @auth
         @if(Auth::user()->is_admin)
             <div class="form-group row">
-                <label for="is_admin" class="col-md-4 col-form-label text-md-right">Administrador?</label>
+                <label for="is_admin" class="col-md-4 col-form-label text-md-right">{{__('fields.users.Administrador?')}}</label>
 
                 <div class="col-md-6">
-                    <input id="is_admin" type="checkbox" class="form-control @error('is_admin') is-invalid @enderror" @if((old('is_admin') ?? $user->is_admin) === '1') checked @endif name="is_admin" value="1">
+                    <input id="is_admin" type="checkbox" class="form-control @error('is_admin') is-invalid @enderror" @if(old('is_admin') === '1' || $user->is_admin === 1) checked @endif name="is_admin" value="1">
 
                     @error('is_admin')
                         <span class="invalid-feedback" role="alert">
@@ -64,7 +77,7 @@
     @endauth
 
     <div class="form-group row">
-        <label for="password" class="col-md-4 col-form-label text-md-right">Senha</label>
+        <label for="password" class="col-md-4 col-form-label text-md-right">{{__('password')}}</label>
 
         <div class="col-md-6">
             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
@@ -78,10 +91,16 @@
     </div>
 
     <div class="form-group row">
-        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirmar Senha</label>
+        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{__('fields.users.password_confirmation')}}</label>
 
         <div class="col-md-6">
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
+            <input id="password-confirm" type="password" class="form-control @error('password-confirm') is-invalid @enderror"  name="password_confirmation" autocomplete="new-password">
+
+            @error('password_confirmation')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
     </div>
 

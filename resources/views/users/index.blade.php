@@ -8,21 +8,21 @@
                 <table class="table table-striped table-dark">
                     <tr>
                         <th>
-                            Nome
+                            {{__('fields.users.name')}}
                         </th>
                         <th>
-                            E-mail
+                            {{__('fields.users.e-mail adress')}}
                         </th>
                         <th>
-                            Usuário
+                            {{__('fields.users.username')}}
                         </th>
                         <th>
-                            Cargo
+                            {{__('head.table.role')}}
                         </th>
 
                         <th></th>
 
-                        <th>Ações</th>
+                        <th>{{__('head.table.actions')}}</th>
                         <th></th>
                     </tr>
                     @foreach ($users as $user)
@@ -32,16 +32,16 @@
                         <td>{{ $user->username }}</td>
                         <td>
                             @if($user->is_admin)
-                                Administrador
+                                {{__('table.field.administrator')}}
                             @else
-                                Colaborador
+                                {{__('table.field.coworker')}}
                             @endif
                         </td>
 
-                        <td><a href="{{ route('home') }}" class="btn btn-primary" role="button">Visualizar</a></td>
+                        <td><a href="{{ route('users.show', $user->id) }}" class="btn btn-primary" role="button">{{__('buttons.visualize')}}</a></td>
                         <td>
                             @can('update-user', $user)
-                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success" role="button">Editar</a>
+                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success" role="button">{{__('buttons.edit')}}</a>
                             @endcan
                         </td>
 
@@ -51,7 +51,7 @@
                                     @CSRF
                                     @method('DELETE')
 
-                                    <button class="btn btn-danger" role="button">Excluir</button>
+                                    <button class="btn btn-danger" role="button">{{__('buttons.delete')}}</button>
                                 </form>
                             @endcan
                         </td>

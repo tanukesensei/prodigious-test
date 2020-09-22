@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'username', 'password', 'is_admin', 'avatar',
+        'name', 'email', 'username', 'password', 'is_admin', 'avatar', 'description',
     ];
 
     /**
@@ -47,6 +47,7 @@ class User extends Authenticatable
             'is_admin' => $data['is_admin'] ?? false,
             'username' => $data['username'],
             'password' => $data['password'],
+            'description' =>$data['description'] ?? "",
         ]);
     }
 
