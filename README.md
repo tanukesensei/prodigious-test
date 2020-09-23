@@ -1,4 +1,4 @@
-# Meu Teste
+# My Test
 
 [README em Português](README-PT-BR.md)
 
@@ -77,4 +77,4 @@ I am grateful to [Lucas](https://github.com/lucascudo/laravel-pt-BR-localization
 
 ## License
 
-Meu Teste is a free software project licensed by [MIT](LICENSE).
+My Test is a free software project licensed by [MIT](LICENSE).
