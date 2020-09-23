@@ -16,7 +16,7 @@
     </div>
 
     <div class="form-group row">
-        <label for="email" class="col-md-4 col-form-label text-md-right">{{__('fields.users.e-mail adress')}}</label>
+        <label for="email" class="col-md-4 col-form-label text-md-right">{{__('fields.users.email')}}</label>
 
         <div class="col-md-6">
             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
@@ -42,39 +42,6 @@
             @enderror
         </div>
     </div>
-
-    @auth
-        @if(Auth::user()->is_admin)
-
-            <div class="form-group row">
-                <label for="description" class="col-md-4 col-form-label text-md-right">{{__('fields.users.description')}}</label>
-
-                <div class="col-md-6">
-                    <textarea id="description" type="description" class="form-control @error('description') is-invalid @enderror" name="description" autocomplete="description">{{ old('description') }}</textarea>
-                    @error('description')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="is_admin" class="col-md-4 col-form-label text-md-right">{{__('fields.users.Administrador?')}}</label>
-
-                <div class="col-md-6">
-                    <input id="is_admin" type="checkbox" class="form-control @error('is_admin') is-invalid @enderror" @if(old('is_admin') === '1') checked @endif name="is_admin" value="1">
-
-                    @error('is_admin')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-        @endif
-    @endauth
 
     <div class="form-group row">
         <label for="password" class="col-md-4 col-form-label text-md-right">{{__('fields.users.password')}}</label>
@@ -106,7 +73,7 @@
             <label for="avatar" class="col-md-4 col-form-label text-md-right">{{__('fields.users.avatar')}}</label>
 
             <div class="col-md-6">
-                <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar" accept="image/*">
+                <input id="avatar" type="file" class=" @error('avatar') is-invalid @enderror" name="avatar" accept="image/*">
 
                 @error('avatar')
                     <span class="invalid-feedback" role="alert">
@@ -115,6 +82,38 @@
                 @enderror
             </div>
         </div>
+        @endif
+    @endauth
+
+    @auth
+        @if(Auth::user()->is_admin)
+
+            <div class="form-group row">
+                <label for="description" class="col-md-4 col-form-label text-md-right">{{__('fields.users.description')}}</label>
+
+                <div class="col-md-6">
+                    <textarea id="description" type="description" class="form-control @error('description') is-invalid @enderror" name="description" autocomplete="description">{{ old('description') }}</textarea>
+                    @error('description')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="is_admin" class="col-md-4 col-form-label text-md-right">{{__('fields.users.is_admin')}}</label>
+
+                <div class="col-md-6">
+                    <input id="is_admin" type="checkbox" class="form-control @error('is_admin') is-invalid @enderror" @if(old('is_admin') === '1') checked @endif name="is_admin" value="1">
+
+                    @error('is_admin')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
         @endif
     @endauth
 
